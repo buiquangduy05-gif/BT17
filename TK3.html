@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài TK3</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.box{
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    width:300px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+input{
+    padding:10px;
+    width:150px;
+    margin:10px;
+}
+
+button{
+    padding:10px 15px;
+    margin:5px;
+}
+
+.result{
+    margin-top:15px;
+    font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>TK3: Tính phí vận chuyển</h2>
+
+    <p>Nhập tổng đơn hàng ($)</p>
+    <input type="number" id="money">
+
+    <br>
+    <button onclick="tinh()">Tính</button>
+    <button onclick="reset()">Reset</button>
+
+    <div class="result" id="output"></div>
+
+    <br>
+    <a href="index.html">Về trang chủ</a>
+</div>
+
+<script>
+function calculateTotal(subtotal){
+    const shipping = subtotal > 50 ? 0 : 5;
+    const total = subtotal + shipping;
+    return {total,shipping};
+}
+
+function tinh(){
+    const subtotal = Number(document.getElementById("money").value);
+
+    if(subtotal<=0){
+        alert("Nhập số tiền hợp lệ");
+        return;
+    }
+
+    const data = calculateTotal(subtotal);
+
+    document.getElementById("output").innerHTML =
+        "Tiền hàng: $" + subtotal + "<br>" +
+        "Phí ship: $" + data.shipping + "<br>" +
+        "<b>Tổng thanh toán: $" + data.total + "</b>";
+}
+
+function reset(){
+    document.getElementById("money").value="";
+    document.getElementById("output").innerHTML="";
+}
+</script>
+
+</body>
+</html>

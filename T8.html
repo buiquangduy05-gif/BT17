@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài T8</title>
+
+<style>
+    body{
+        font-family: Arial;
+        background: linear-gradient(135deg,#667eea,#764ba2);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        color: white;
+    }
+
+    .box{
+        background: white;
+        color: black;
+        padding: 25px;
+        border-radius: 15px;
+        width: 380px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    h2{margin-bottom:10px;}
+
+    .controls{
+        margin-bottom:10px;
+    }
+
+    input{
+        width: 70px;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+
+    button{
+        padding: 8px 14px;
+        border: none;
+        border-radius: 8px;
+        background: #4CAF50;
+        color: white;
+        cursor: pointer;
+        margin-left:5px;
+    }
+
+    button:hover{background:#43a047;}
+
+    table{
+        width: 100%;
+        margin-top: 15px;
+        border-collapse: collapse;
+    }
+
+    td{
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        font-size: 16px;
+    }
+
+    tr:hover{
+        background: #e0f2fe;
+        transform: scale(1.02);
+    }
+
+    .big{
+        font-size: 20px;
+        margin-top: 10px;
+        color: blue;
+        font-weight: bold;
+    }
+
+    a{
+        display:block;
+        margin-top:15px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Bài T8: Bảng cửu chương</h2>
+
+    <div class="controls">
+        Số: <input type="number" id="number" value="7">
+        Từ <input type="number" id="from" value="1">
+        đến <input type="number" id="to" value="10">
+    </div>
+
+    <button onclick="taoBang()">Tạo bảng</button>
+    <button onclick="reset()">Reset</button>
+
+    <div id="big" class="big"></div>
+    <div id="table-output"></div>
+
+    <a href="index.html">⬅ Về trang chủ</a>
+</div>
+
+<script>
+function taoBang(){
+    const n = parseInt(document.getElementById("number").value);
+    const from = parseInt(document.getElementById("from").value);
+    const to = parseInt(document.getElementById("to").value);
+
+    let html="<table>";
+
+    for(let i=from;i<=to;i++){
+        html += `<tr onclick="showBig(${n},${i})">
+                    <td>${n} x ${i}</td>
+                    <td>=</td>
+                    <td><b>${n*i}</b></td>
+                 </tr>`;
+    }
+
+    html+="</table>";
+    document.getElementById("table-output").innerHTML=html;
+}
+
+function showBig(n,i){
+    document.getElementById("big").textContent =
+        `${n} x ${i} = ${n*i}`;
+}
+
+function reset(){
+    document.getElementById("table-output").innerHTML="";
+    document.getElementById("big").textContent="";
+}
+
+document.addEventListener("keydown",e=>{
+    if(e.key==="Enter") taoBang();
+});
+</script>
+
+</body>
+</html>

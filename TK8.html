@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>TK8 - Hex → RGB Pro</title>
+
+<style>
+    body{
+        font-family: Arial;
+        background: linear-gradient(120deg,#1e293b,#0f172a);
+        color: white;
+        text-align: center;
+        padding-top: 50px;
+    }
+
+    .box{
+        background:#111827;
+        width:420px;
+        margin:auto;
+        padding:30px;
+        border-radius:20px;
+        box-shadow:0 0 25px rgba(0,0,0,0.5);
+    }
+
+    input{
+        padding:12px;
+        width:70%;
+        border-radius:10px;
+        border:none;
+        font-size:16px;
+        margin-top:10px;
+    }
+
+    button{
+        padding:12px 18px;
+        border:none;
+        border-radius:10px;
+        margin:10px;
+        font-size:16px;
+        cursor:pointer;
+        background:#22c55e;
+        color:white;
+    }
+
+    button:hover{
+        background:#16a34a;
+    }
+
+    #colorBox{
+        width:120px;
+        height:120px;
+        margin:20px auto;
+        border-radius:15px;
+        border:3px solid white;
+        background:#fff;
+    }
+
+    #result{
+        font-size:20px;
+        margin-top:10px;
+        font-weight:bold;
+    }
+
+    .error{
+        color:#f87171;
+    }
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>🎨 TK8: Hex → RGB Converter PRO</h2>
+
+    <input type="text" id="hexInput" placeholder="#ff0000 hoặc #f00">
+
+    <br>
+    <button onclick="convert()">Chuyển đổi</button>
+    <button onclick="randomColor()">Random màu</button>
+    <button onclick="copyRGB()">Copy RGB</button>
+
+    <div id="colorBox"></div>
+    <div id="result"></div>
+</div>
+
+<script>
+function hexToRgb(hex){
+    hex = hex.trim();
+
+    const shorthand = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthand,(m,r,g,b)=> r+r+g+g+b+b);
+
+    const full = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+    if(!full) return null;
+
+    const r = parseInt(full[1],16);
+    const g = parseInt(full[2],16);
+    const b = parseInt(full[3],16);
+
+    return {r,g,b};
+}
+
+function convert(){
+    const input = document.getElementById("hexInput").value;
+    const resultDiv = document.getElementById("result");
+    const colorBox = document.getElementById("colorBox");
+
+    const rgb = hexToRgb(input);
+
+    if(!rgb){
+        resultDiv.innerHTML = "❌ Mã màu không hợp lệ";
+        resultDiv.className = "error";
+        return;
+    }
+
+    const rgbText = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+
+    resultDiv.innerHTML = rgbText;
+    resultDiv.className = "";
+    colorBox.style.background = rgbText;
+}
+
+function randomColor(){
+    const randomHex = "#"+Math.floor(Math.random()*16777215).toString(16).padStart(6,"0");
+    document.getElementById("hexInput").value = randomHex;
+    convert();
+}
+
+function copyRGB(){
+    const text = document.getElementById("result").innerText;
+    if(text.startsWith("rgb")){
+        navigator.clipboard.writeText(text);
+        alert("Đã copy RGB!");
+    }
+}
+</script>
+
+</body>
+</html>

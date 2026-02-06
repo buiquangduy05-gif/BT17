@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài T7</title>
+
+<style>
+    body{
+        font-family: Arial;
+        background: linear-gradient(135deg,#667eea,#764ba2);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        color: white;
+    }
+
+    .box{
+        background: white;
+        color: black;
+        padding: 30px;
+        border-radius: 15px;
+        width: 360px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        text-align: center;
+    }
+
+    h2{margin-bottom:10px;}
+
+    input{
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+    }
+
+    button{
+        margin-top: 12px;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        cursor: pointer;
+        background: #4CAF50;
+        color: white;
+    }
+
+    button:hover{background:#43a047;}
+
+    .steps{
+        text-align: left;
+        margin-top: 15px;
+        background: #f3f4f6;
+        padding: 10px;
+        border-radius: 8px;
+        max-height: 120px;
+        overflow:auto;
+        font-size: 14px;
+    }
+
+    .result{
+        font-size: 22px;
+        margin-top: 15px;
+        color: blue;
+        font-weight: bold;
+    }
+
+    a{
+        display:block;
+        margin-top:15px;
+        text-decoration:none;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Bài T7: Tính tổng mảng</h2>
+
+    <p>Mặc định: 1,5,10,2</p>
+    <input id="arrayInput" placeholder="Nhập mảng: ví dụ 3,4,5">
+
+    <button onclick="tinhTong()">Tính tổng</button>
+    <button onclick="reset()">Reset</button>
+
+    <div class="steps" id="steps"></div>
+    <div class="result" id="sum-output">Kết quả: ?</div>
+
+    <a href="index.html">⬅ Về trang chủ</a>
+</div>
+
+<script>
+function tinhTong(){
+    const input = document.getElementById("arrayInput").value;
+    let numbers;
+
+    if(input.trim()===""){
+        numbers=[1,5,10,2];
+    }else{
+        numbers=input.split(",").map(Number);
+    }
+
+    let stepsHTML="";
+    let sum=0;
+
+    numbers.forEach(num=>{
+        stepsHTML += sum + " + " + num + " = " + (sum+num) + "<br>";
+        sum += num;
+    });
+
+    document.getElementById("steps").innerHTML=stepsHTML;
+    document.getElementById("sum-output").textContent="Kết quả: "+sum;
+}
+
+function reset(){
+    document.getElementById("arrayInput").value="";
+    document.getElementById("steps").innerHTML="";
+    document.getElementById("sum-output").textContent="Kết quả: ?";
+}
+</script>
+
+</body>
+</html>

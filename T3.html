@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Lọc danh sách nâng cao</title>
+
+<style>
+    body{
+        font-family: Arial;
+        background: #f4f6f8;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .box{
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        width: 320px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    h2{
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    input{
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+
+    ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li{
+        padding: 10px;
+        margin-bottom: 6px;
+        background: #eef2f7;
+        border-radius: 6px;
+        transition: 0.3s;
+    }
+
+    li:hover{
+        background: #dbeafe;
+        transform: scale(1.03);
+    }
+
+    mark{
+        background: yellow;
+        font-weight: bold;
+    }
+
+    .not-found{
+        text-align: center;
+        color: red;
+        display: none;
+        margin-top: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Tìm kiếm trái cây</h2>
+
+    <input type="text" id="search" placeholder="Nhập để tìm..." onkeyup="filterList()">
+
+    <ul id="my-list">
+        <li>Táo</li>
+        <li>Cam</li>
+        <li>Chuối</li>
+        <li>Dưa hấu</li>
+        <li>Xoài</li>
+        <li>Nho</li>
+        <li>Thanh long</li>
+        <li>Dứa</li>
+    </ul>
+
+    <div id="notFound" class="not-found">Không tìm thấy</div>
+</div>
+
+<script>
+function filterList(){
+    const input = document.getElementById("search");
+    const filter = input.value.toUpperCase();
+    const ul = document.getElementById("my-list");
+    const li = ul.getElementsByTagName("li");
+    let found = false;
+
+    for(let i=0;i<li.length;i++){
+        const text = li[i].textContent || li[i].innerText;
+
+        if(text.toUpperCase().indexOf(filter) > -1){
+            li[i].style.display = "";
+
+            // highlight
+            const regex = new RegExp(`(${input.value})`, "gi");
+            li[i].innerHTML = text.replace(regex,"<mark>$1</mark>");
+
+            found = true;
+        }else{
+            li[i].style.display = "none";
+            li[i].innerHTML = text; 
+        }
+    }
+
+    document.getElementById("notFound").style.display = found ? "none" : "block";
+}
+</script>
+
+</body>
+</html>
